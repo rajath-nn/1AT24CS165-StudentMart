@@ -18,3 +18,5 @@ The HTML-like code is inside the return() statement. This is called JSX.
 
 4.What is the purpose of export default?
 export default makes the App component available to be imported and used in other files, such as main.jsx.
+
+React Lab is best
