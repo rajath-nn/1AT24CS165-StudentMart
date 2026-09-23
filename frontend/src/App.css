@@ -1,26 +1,7 @@
-.studentmart-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 60vh;
-  padding: 2rem;
-  text-align: center;
-  background-color: rgb(226, 86, 43);
-  color: #ffffff;
+h1 {
+  color: blue;
 }
 
-.studentmart-page h1 {
-  margin-bottom: 1rem;
-  font-size: 2.5rem;
-}
-
-.studentmart-page p {
-  margin: 0.5rem 0;
-  font-size: 1.1rem;
-}
-
-.studentmart-page p:last-child {
-  margin-top: 1rem;
-  font-weight: 600;
+h2 {
+  color: #333;
 }
