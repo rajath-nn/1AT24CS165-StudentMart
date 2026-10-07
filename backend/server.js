@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const authRoutes = require("./Routes/authroutes");
 
 require("dotenv").config();
 
@@ -8,11 +9,18 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {
     res.json({
-        message: "StudentMart API is running"
+        message: "User authentication API is running"
     });
+});
+
+app.use((error, req, res, next) => {
+    console.error("API error:", error.message);
+    if (res.headersSent) return next(error);
+    res.status(500).json({ message: "Something went wrong. Please try again." });
 });
 
 mongoose
@@ -20,9 +28,10 @@ mongoose
     .then(() => {
         console.log("MongoDB connected");
 
-        app.listen(process.env.PORT, () => {
+        const port = process.env.PORT || 5000;
+        app.listen(port, () => {
             console.log(
-                `Server running on http://localhost:${process.env.PORT}`
+                `Server running on http://localhost:${port}`
             );
         });
     })
