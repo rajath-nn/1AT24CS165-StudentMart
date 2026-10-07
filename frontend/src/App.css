@@ -1,7 +1,262 @@
-h1 {
-  color: blue;
+#root {
+  min-height: 100vh;
 }
 
-h2 {
-  color: #333;
+.page-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px 28px;
+  background:
+    radial-gradient(ellipse at 12% 10%, rgba(213, 231, 255, 0.62), transparent 38%),
+    radial-gradient(ellipse at 93% 88%, rgba(220, 233, 255, 0.54), transparent 34%),
+    #f7f9fd;
+}
+
+.auth-card,
+.welcome-card {
+  width: min(100%, 440px);
+  padding: 40px;
+  border: 1px solid #e9edf4;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 24px 70px rgba(27, 51, 91, 0.09);
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 26px;
+  border-radius: 13px;
+  background: #2259bf;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #55739f;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 1.5px;
+}
+
+h1 {
+  margin: 0;
+  color: #17243b;
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+}
+
+.subtitle,
+.welcome-copy {
+  margin: 9px 0 24px;
+  color: #718097;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 24px;
+  padding: 4px;
+  border-radius: 10px;
+  background: #f2f5fa;
+}
+
+.mode-switch button {
+  min-height: 37px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #77849a;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mode-switch button.active {
+  background: #fff;
+  color: #214f9d;
+  box-shadow: 0 1px 4px rgba(32, 55, 91, 0.1);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 17px;
+  color: #34445e;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.field input {
+  width: 100%;
+  height: 46px;
+  padding: 0 13px;
+  border: 1px solid #dbe2ec;
+  border-radius: 9px;
+  outline: none;
+  background: #fff;
+  color: #18243a;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.field input::placeholder {
+  color: #a5afbd;
+}
+
+.field input:focus {
+  border-color: #5e8bd4;
+  box-shadow: 0 0 0 3px rgba(68, 120, 204, 0.13);
+}
+
+.field input[aria-invalid="true"] {
+  border-color: #d14d55;
+}
+
+.field-hint,
+.field-error {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.field-hint {
+  color: #8895a9;
+}
+
+.field-error,
+.form-message {
+  color: #b33d45;
+}
+
+.form-message {
+  margin: -8px 0 17px;
+  padding: 11px 12px;
+  border: 1px solid #f1d4d5;
+  border-radius: 8px;
+  background: #fff7f7;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.button {
+  width: 100%;
+  min-height: 47px;
+  border: 0;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.button-primary {
+  margin-top: 7px;
+  background: #245bb9;
+  color: #fff;
+}
+
+.button-primary:hover:not(:disabled) {
+  background: #194a9e;
+}
+
+.button-secondary {
+  margin-top: 24px;
+  border: 1px solid #d7e0ef;
+  background: #f7f9fc;
+  color: #315b99;
+}
+
+.button-secondary:hover:not(:disabled) {
+  background: #edf3fc;
+}
+
+.switch-prompt {
+  margin: 22px 0 0;
+  color: #8290a3;
+  text-align: center;
+  font-size: 12px;
+}
+
+.switch-prompt button {
+  border: 0;
+  background: transparent;
+  color: #245bb9;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.account-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 15px 16px;
+  border: 1px solid #e8edf4;
+  border-radius: 10px;
+  background: #fafbfd;
+}
+
+.account-detail span {
+  color: #8491a3;
+  font-size: 11px;
+}
+
+.account-detail strong {
+  overflow-wrap: anywhere;
+  color: #30415a;
+  font-size: 14px;
+}
+
+.loading-state {
+  color: #66768d;
+  font-size: 14px;
+}
+
+.page-footnote {
+  margin: 22px 0 0;
+  color: #8b98aa;
+  font-size: 11px;
+}
+
+.page-footnote span {
+  margin: 0 5px;
+  color: #b1bdcb;
+}
+
+@media (max-width: 520px) {
+  .page-shell {
+    padding: 24px 14px;
+  }
+
+  .auth-card,
+  .welcome-card {
+    padding: 30px 24px;
+  }
 }
