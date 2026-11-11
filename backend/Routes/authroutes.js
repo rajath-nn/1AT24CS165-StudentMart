@@ -11,6 +11,20 @@ function validEmail(email) {
     return typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function validPhone(phone) {
+    const digits = phone.replace(/\D/g, "");
+    return phone.length <= 32 && /^\+?[0-9\s().-]+$/.test(phone) && digits.length >= 7 && digits.length <= 15;
+}
+
+function parseAge(value) {
+    if (value === "" || value === null || value === undefined) return null;
+    if (typeof value === "number" && Number.isInteger(value)) return value;
+    if (typeof value === "string" && /^\d+$/.test(value)) return Number(value);
+    return NaN;
+}
+
+const GENDERS = ["Female", "Male", "Non-binary", "Other", "Prefer not to say"];
+
 function passwordProblem(password) {
     if (typeof password !== "string" || password.length < 8 || password.length > 128) {
         return "Password must be between 8 and 128 characters.";
@@ -53,7 +67,14 @@ function signToken(user) {
 }
 
 function publicUser(user) {
-    return { id: user.id, name: user.name, email: user.email };
+    return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone || "",
+        age: user.age ?? null,
+        gender: user.gender || ""
+    };
 }
 
 function sendSession(res, user, status = 200) {
@@ -99,11 +120,17 @@ router.post("/register", async (req, res, next) => {
         const body = req.body || {};
         const name = typeof body.name === "string" ? body.name.trim() : "";
         const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+        const phone = body.phone === undefined ? "" : typeof body.phone === "string" ? body.phone.trim() : null;
+        const age = parseAge(body.age);
+        const gender = body.gender === undefined ? "" : typeof body.gender === "string" ? body.gender : null;
         const { password } = body;
         const errors = {};
 
         if (name.length < 2 || name.length > 80) errors.name = "Name must be between 2 and 80 characters.";
         if (!validEmail(email)) errors.email = "Enter a valid email address.";
+        if (phone === null || (phone && !validPhone(phone))) errors.phone = "Enter a valid phone number with 7 to 15 digits.";
+        if (Number.isNaN(age) || (age !== null && (age < 1 || age > 120))) errors.age = "Age must be between 1 and 120.";
+        if (gender === null || (gender && !GENDERS.includes(gender))) errors.gender = "Choose a valid gender option.";
         const passwordError = passwordProblem(password);
         if (passwordError) errors.password = passwordError;
         if (Object.keys(errors).length) return res.status(400).json({ message: "Please check the form fields.", errors });
@@ -111,7 +138,7 @@ router.post("/register", async (req, res, next) => {
         const existing = await User.findOne({ email });
         if (existing) return res.status(409).json({ message: "An account with this email already exists.", errors: { email: "Email is already registered." } });
 
-        const user = await User.create({ name, email, passwordHash: await hashPassword(password) });
+        const user = await User.create({ name, email, phone, age, gender, passwordHash: await hashPassword(password) });
         return sendSession(res, user, 201);
     } catch (error) {
         if (error.code === 11000) return res.status(409).json({ message: "An account with this email already exists.", errors: { email: "Email is already registered." } });
